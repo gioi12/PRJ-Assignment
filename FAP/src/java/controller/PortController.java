@@ -4,6 +4,7 @@
  */
 package controller;
 
+import controller.authentication.BaseRequiredAuthenticationController;
 import dal.LessionDBcontext;
 import entity.Account;
 import entity.Lession;
@@ -19,7 +20,7 @@ import java.io.PrintWriter;
  *
  * @author ACER
  */
-public class PortController extends HttpServlet {
+public class PortController extends BaseRequiredAuthenticationController {
 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -32,7 +33,7 @@ public class PortController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account acc)
             throws ServletException, IOException {
         Account abc = (Account) request.getSession().getAttribute("account");
         request.setAttribute("account", abc);
@@ -48,7 +49,7 @@ public class PortController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response,Account acc)
             throws ServletException, IOException {
        
     }

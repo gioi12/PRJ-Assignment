@@ -13,9 +13,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        abd  ${requestScope.se.getLname()}
-      ${requestScope.lecs.lid}
-    <c:if test="${requestScope.se eq not null} " >
+ 
+    <c:if test=" " >
             <table>
                 <tr>
                     <td> hi ${se.lname}</td>

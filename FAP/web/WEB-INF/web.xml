@@ -12,6 +12,10 @@
         <servlet-name>InputController</servlet-name>
         <servlet-class>controller.InputController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>controller.attController</servlet-name>
+        <servlet-class>controller.attController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>controller.PortController</servlet-name>
         <url-pattern>/port</url-pattern>
@@ -22,6 +26,10 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>InputController</servlet-name>
-        <url-pattern>/attendence/input</url-pattern>
+        <url-pattern>/attendence/view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controller.attController</servlet-name>
+        <url-pattern>/attendence/att</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -13,6 +13,6 @@
     </head>
     <body>
         <h1>Hello ${requestScope.account.getDisplayname()}</h1> <br/>
-        1.<a href="http://localhost:9999/FAP/attendence/input">check attendence</a>
+        1.<a href="http://localhost:9999/FAP/attendence/view?id=1">check attendence</a>
     </body>
 </html>

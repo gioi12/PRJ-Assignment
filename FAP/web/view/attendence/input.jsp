@@ -11,35 +11,28 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <script>
-        function showTable() {
-            var table = document.getElementById("lessonTable");
-            table.style.display = "table";
-        }
-    </script>
+        
     </head>
     <body>       
         <h1>Hello ${sessionScope.account.getDisplayname()}</h1> <br/>
-        <form action="input" method="POST"> 
-            <input type="text" name="lid" id="lid" >
-             From : <input type="date" name="from" value="${requestScope.from}" /> -
-            <input type="date" name="to" value="${requestScope.to}"/>
+        <form action="input" method="GET">         
+            <input type="text" name="id" value="1">
             <input type="submit" value="VIEW" >
-        </form>
-            <c:if test="">
-        <table id="lessonTable" style="display: none;" <table border="1px">            
-             <tr>
-                <td></td>
+        
+        <table   <table border="1px">          
+                    
+              <tr>  <td>From : <input type="date" name="from" value="${requestScope.from}" /> <br/>
+            <input type="date" name="to" value="${requestScope.to}"/>   </td>
                 <c:forEach items="${requestScope.dates}" var="d">
                     <td>${d}</td>
                 </c:forEach>
-                 
+                
             </tr>
             <c:forEach items="${requestScope.slots}" var="slot">                 
                 <tr>                      
                     <td>${slot.name}</td>
                     <c:forEach items="${requestScope.dates}" var="d">
-                        <td>
+                        <td> 
                             <c:forEach items="${requestScope.lessions}" var="les">
                                 <c:if test="${(les.date eq d) and (les.slot.id eq slot.id)}">
                                     ${les.group.name} - ${les.group.subject.name}
@@ -60,7 +53,7 @@
             </c:forEach>      
         </table>
         <br/>
-        </c:if>
+     </form>
     </body>
 
 </html>

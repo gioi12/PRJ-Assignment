@@ -13,6 +13,7 @@ public class Lecture {
     private String lname;
     private int phone;
     private String mail;
+    
     public void setLid(int lid) {
         this.lid = lid;
     }

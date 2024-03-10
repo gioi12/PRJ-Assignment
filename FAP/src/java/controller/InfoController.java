@@ -4,10 +4,8 @@
  */
 package controller;
 
-import dal.LectureDBcontext;
 import dal.LessionDBcontext;
 import dal.TimeSlotDBcontext;
-import entity.Lecture;
 import entity.Lession;
 import entity.Slot;
 import jakarta.servlet.ServletException;
@@ -25,8 +23,17 @@ import util.DateTimeHelper;
  *
  * @author ACER
  */
-public class InputController extends HttpServlet {
+public class InfoController extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -37,12 +44,12 @@ public class InputController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int lid = Integer.parseInt(req.getParameter("id"));
-     
-        String raw_from = req.getParameter("from");
-        String raw_to = req.getParameter("to");
+        int lid = Integer.parseInt(request.getParameter("id"));
+        
+        String raw_from = request.getParameter("from");
+        String raw_to = request.getParameter("to");
         Date today = new Date();
         java.sql.Date from = null; 
         java.sql.Date to = null;
@@ -66,7 +73,7 @@ public class InputController extends HttpServlet {
         {
             to = java.sql.Date.valueOf(raw_to);
         }
-        
+     
         ArrayList<java.sql.Date> dates = DateTimeHelper.getDatesBetween(from, to);
         // find day
           SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -92,15 +99,13 @@ public class InputController extends HttpServlet {
         LessionDBcontext lessDB = new LessionDBcontext();
         ArrayList<Lession> lessions = lessDB.getBy(lid, from, to);
         
-        req.setAttribute("from", from);
-        req.setAttribute("to", to);
-        req.setAttribute("slots", slots);
-        req.setAttribute("dates", dates);
-        req.setAttribute("lessions", lessions);
-         req.setAttribute("days", days);
-        req.getRequestDispatcher("../view/attendence/input.jsp").forward(req, resp);
-
-
+        request.setAttribute("from", from);
+        request.setAttribute("to", to);
+        request.setAttribute("slots", slots);
+        request.setAttribute("dates", dates);
+        request.setAttribute("lessions", lessions);
+        request.setAttribute("days", days);
+        request.getRequestDispatcher("../view/attendence/info.jsp").forward(request, response);
     }
 
     /**
@@ -114,7 +119,6 @@ public class InputController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      
     }
 
     /**

@@ -4,6 +4,9 @@
  */
 package util;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -63,4 +66,36 @@ public class DateTimeHelper {
         }
         return dates;
     }
+    
+      public static String findDayOfWeek(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(dateString, formatter);
+        
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+        
+        String dayOfWeekString = dayOfWeek.toString();
+        
+        dayOfWeekString = dayOfWeekString.substring(0, 1).toUpperCase() + dayOfWeekString.substring(1).toLowerCase();
+        
+        return dayOfWeekString;
+    }
+       public static ArrayList<String> findDayOfWeekRange(String startDateString, String endDateString) {
+        ArrayList<String> dayOfWeekList = new ArrayList<>();
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate startDate = LocalDate.parse(startDateString, formatter);
+        LocalDate endDate = LocalDate.parse(endDateString, formatter);
+        
+        LocalDate currentDate = startDate;
+        while (!currentDate.isAfter(endDate)) {
+            DayOfWeek dayOfWeek = currentDate.getDayOfWeek();
+            String dayOfWeekString = dayOfWeek.toString();
+            dayOfWeekString = dayOfWeekString.substring(0, 1).toUpperCase() + dayOfWeekString.substring(1).toLowerCase();
+            dayOfWeekList.add(dayOfWeekString);
+            currentDate = currentDate.plusDays(1); // Move to the next date
+        }
+        
+        return dayOfWeekList;
+    }
+
 }

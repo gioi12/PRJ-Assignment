@@ -53,25 +53,45 @@ public class attController extends HttpServlet {
             throws ServletException, IOException {
         int lesId = Integer.parseInt(request.getParameter("id"));
         StudentDBcontext stuDB = new StudentDBcontext();
-        ArrayList<Student> students = new ArrayList<>();
-        students = stuDB.getStudentBylession(lesId);
+        ArrayList<Student> students = stuDB.getStudentBylession(lesId);
         ArrayList<Attendence> atts = new ArrayList<>();
-        Lession les = new Lession();
-        les.setId(lesId);
+        AttendenceDBcontext attDB = new AttendenceDBcontext();
+        boolean check = false;
+        Lession lession = new Lession();
+        lession.setId(lesId);
+        
+        boolean isAtt = attDB.isAttStatusByLession(lesId);
+        if(isAtt == true){
         for (Student student : students) {
+            String description = request.getParameter("description" + student.getId());
+            boolean isPresent = request.getParameter("present" + student.getId()).equals("yes");
+            Attendence attCheck = new Attendence();
+            attCheck = attDB.getInfoStudentStatusByLession(lesId, student.getId());
+            if (attCheck != null) {
+                if ((attCheck.isPresent() != isPresent) && (attCheck.getDescription() != description)) {
+                   attDB.uppdateByChange(lesId, student.getId(), description, isPresent);
+                }
+            }
+        }
+        }
+        else {
+             for (Student student : students) {
             Attendence att = new Attendence();
+            att.setLession(lession);
             att.setStudent(student);
-            att.setLession(les);
-            att.setId(Integer.parseInt(request.getParameter("id")));
-            att.setDescription(request.getParameter("description" + student.getId()));
-            att.setPresent(request.getParameter("present" + student.getId()).equals("yes"));
+            att.setPresent(request.getParameter("present"+student.getId()).equals("yes"));
+            att.setDescription(request.getParameter("description"+student.getId()));
             atts.add(att);
         }
-        AttendenceDBcontext attDB = new AttendenceDBcontext();
-        attDB.batchupdateByLession(lesId, atts);
-        response.sendRedirect("att?id="+lesId);
+   
+            attDB.batchupdateByLession(lesId, atts);
+            attDB.uppdateLession(lesId);
+        }
+        response.sendRedirect("att?id=" + lesId);
+    
     }
-
+        
+    
     /**
      * Returns a short description of the servlet.
      *

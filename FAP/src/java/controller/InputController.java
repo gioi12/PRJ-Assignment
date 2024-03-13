@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.AttendenceDBcontext;
 import dal.LectureDBcontext;
 import dal.LessionDBcontext;
 import dal.TimeSlotDBcontext;
